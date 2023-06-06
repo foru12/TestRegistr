@@ -39,8 +39,10 @@
             android:layout_marginTop="@dimen/signup_text_margin_top">
             <EditText
                 style="@style/modifiedEditText"
+                android:enabled="false"
                 android:inputType="text"
                 android:maxLines="1"
+                android:text="+79219999999"
                 android:hint="Mobile Number"/>
         </RelativeLayout>
 
@@ -49,20 +51,13 @@
             android:layout_marginTop="@dimen/signup_text_margin_top">
             <EditText
                 style="@style/modifiedEditText"
-                android:inputType="textEmailAddress"
+                android:digits="1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_"
                 android:maxLines="1"
+
                 android:hint="@string/login_email_hint"/>
         </RelativeLayout>
 
-        <RelativeLayout
-            style="@style/parent"
-            android:layout_marginTop="@dimen/signup_text_margin_top">
-            <EditText
-                style="@style/modifiedEditText"
-                android:hint="@string/login_password_hint"
-                android:maxLines="1"
-                android:inputType="textPassword"/>
-        </RelativeLayout>
+
 
         <Button
             style="@style/loginButton"
