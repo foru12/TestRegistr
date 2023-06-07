@@ -3,6 +3,7 @@ package com.example.testregistr
 
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
+import android.util.Log
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testregistr.ViewModel.ClientAPI
@@ -20,7 +21,15 @@ class Main : AppCompatActivity() {
         edNubmer = findViewById<EditText>(R.id.edNubmer)
         //edNubmer!!.addTextChangedListener(PhoneNumberFormattingTextWatcher())
         val restClientApi = ClientAPI()
-        restClientApi.sendAuthNumber("string")
+        val params: MutableMap<String, String> = HashMap()
+        params["phone"] = "0"
+
+
+        
+        if (restClientApi.sendAuthNumber(params)){
+            Log.e("User ", "--> " + "found");
+        }else  Log.e("User ", "--> " + "Not found");
+
     }
 
     private fun getTemplates(text: String): String {

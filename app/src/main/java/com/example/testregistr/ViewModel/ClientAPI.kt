@@ -13,7 +13,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ClientAPI : SendAuth{
 
-    override fun sendAuthNumber(phone:String) {
+    override fun sendAuthNumber(phoneMap:MutableMap<String, String>): Boolean {
+
+        var requestMassage = false
+
         Log.e("Start Post request","...")
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(BASEURL)
@@ -21,9 +24,9 @@ class ClientAPI : SendAuth{
             .build()
 
         val retrofitAPI: Service = retrofit.create(Service::class.java)
-        val params: MutableMap<String, String> = HashMap()
-        params["phone"] = "0"
-        val call: Call<ResponseBody?>? = retrofitAPI.loadRepoApi(params)
+
+
+        val call: Call<ResponseBody?>? = retrofitAPI.loadRepoApi(phoneMap)
         call?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 Log.e("Response","--> " + response.body())
@@ -31,14 +34,23 @@ class ClientAPI : SendAuth{
                 Log.e("Response","--> " + response.headers())
                 Log.e("Response","--> " + response.message())
                 Log.e("Response","--> " + response.toString())
+                if (response.code().toString() == "201"){
+                    Log.e("Success","true")
+                    requestMassage = true
+
+
+                }
+                else requestMassage = false
 
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Log.e("onFailure","--> " + t.toString())
+                requestMassage = false
             }
 
         })
+        return requestMassage
 
     }
 

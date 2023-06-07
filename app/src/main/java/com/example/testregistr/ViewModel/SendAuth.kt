@@ -1,5 +1,5 @@
 package com.example.testregistr.ViewModel
 
 interface SendAuth {
-    fun sendAuthNumber(phone:String)
+    fun sendAuthNumber(phoneMap:MutableMap<String, String>): Boolean
 }

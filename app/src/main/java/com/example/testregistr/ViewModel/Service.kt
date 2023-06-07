@@ -9,6 +9,5 @@ import retrofit2.http.*
 interface Service {
     @Headers("Content-Type:application/json")
     @POST(SENDAUTHCODEURL)
-
     fun loadRepoApi(@Body phoneMap: MutableMap<String, String>): Call<ResponseBody?>?
 }
