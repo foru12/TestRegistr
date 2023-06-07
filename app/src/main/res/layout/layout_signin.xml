@@ -18,7 +18,6 @@
     <LinearLayout
         style="@style/linearParent"
         android:layout_gravity="center"
-        android:id="@+id/containerSignIn"
 
         android:padding="@dimen/loginViewsMargin">
 

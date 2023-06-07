@@ -17,7 +17,6 @@
     <LinearLayout
         style="@style/linearParent"
         android:layout_gravity="center"
-        android:id="@+id/containerSignIn"
 
         android:padding="@dimen/loginViewsMargin">
 
@@ -27,7 +26,7 @@
             android:layout_gravity="center"
             android:visibility="visible"
             android:indeterminateTint="@color/mainColorApp"
-            android:id="@+id/progresLoad"/>
+            />
 
 
 

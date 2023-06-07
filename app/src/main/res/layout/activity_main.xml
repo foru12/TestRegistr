@@ -59,6 +59,10 @@
                     android:id="@+id/layout_signin_ID"
                     layout="@layout/layout_signin"
                     android:visibility="visible"/>
+                <include
+                    android:id="@+id/layout_loading_ID"
+                    layout="@layout/layout_loading"
+                    android:visibility="gone"/>
 
 
 

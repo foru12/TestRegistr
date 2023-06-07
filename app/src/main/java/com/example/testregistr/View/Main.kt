@@ -23,11 +23,11 @@ class Main : AppCompatActivity(),CallBackRequest {
     private lateinit var codePicker: CountryCodePicker
     private lateinit var edNubmer: EditText
     private lateinit var btnSignIn : Button
-    private lateinit var containerSignIn : LinearLayout
-    private lateinit var progresLoad : ProgressBar
     private lateinit var edSmsConfirmation : EditText
+
     private lateinit var layout_sms_ID : View
     private lateinit var layout_signin_ID : View
+    private lateinit var layout_loading_ID : View
     val restClientApi = ClientAPI()
     val params: MutableMap<String, String> = HashMap()
     protected override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,12 +36,12 @@ class Main : AppCompatActivity(),CallBackRequest {
         codePicker = findViewById(R.id.country_code)
         edNubmer = findViewById(R.id.edNubmer)
         btnSignIn = findViewById(R.id.btnSignIn)
-        containerSignIn = findViewById(R.id.containerSignIn)
-        progresLoad = findViewById(R.id.progresLoad)
+
         edSmsConfirmation = findViewById(R.id.edSmsConfirmation)
 
         layout_sms_ID = findViewById(R.id.layout_sms_ID)
         layout_signin_ID = findViewById(R.id.layout_signin_ID)
+        layout_loading_ID = findViewById(R.id.layout_loading_ID)
 
         //edNubmer!!.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 
@@ -55,8 +55,8 @@ class Main : AppCompatActivity(),CallBackRequest {
             //Добавить проверку на кол во симовлов в номере
             var number = edNubmer.text.toString()
             if (number != ""){
-                containerSignIn.visibility = View.GONE
-                progresLoad.visibility = View.VISIBLE
+                layout_signin_ID.visibility = View.GONE
+                layout_loading_ID.visibility = View.VISIBLE
                 params["phone"] = number
 
                 //Запуск проверки на авторизацию
@@ -79,8 +79,8 @@ class Main : AppCompatActivity(),CallBackRequest {
         Log.e("CoolBack","--> " + response)
         if (response.toString() == "201"){
             //Добавить код из смс
-           // progresLoad.visibility = View.GONE
-            //layout_sms_ID.visibility = View.VISIBLE
+            layout_loading_ID.visibility = View.GONE
+            layout_sms_ID.visibility = View.VISIBLE
 
 
 

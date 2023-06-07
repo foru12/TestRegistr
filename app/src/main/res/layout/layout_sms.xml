@@ -10,13 +10,6 @@
     android:layout_marginBottom="@dimen/loginViewsMargin"
     android:background="@color/whiteCardColor">
 
-    <ProgressBar
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        android:indeterminateTint="@color/mainColorApp"
-        android:id="@+id/progresLoad"/>
 
 
 
