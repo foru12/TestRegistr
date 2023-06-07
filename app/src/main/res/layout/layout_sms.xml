@@ -1,6 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/loginCard"
+    app:cardCornerRadius="@dimen/loginCardRadius"
+    android:elevation="5dp"
+    android:layout_gravity="center"
+    android:layout_marginTop="@dimen/loginViewsMargin"
+    android:layout_marginBottom="@dimen/loginViewsMargin"
+    android:background="@color/whiteCardColor">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ProgressBar
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:indeterminateTint="@color/mainColorApp"
+        android:id="@+id/progresLoad"/>
+
+
+
+
+    <LinearLayout
+        style="@style/linearParent"
+        android:layout_gravity="center"
+        android:id="@+id/containerSignIn"
+
+        android:padding="@dimen/loginViewsMargin">
+
+        <EditText
+            android:id="@+id/edSmsConfirmation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="sms code"
+            android:textSize="36sp"
+            android:padding="10dp"
+            android:background="@drawable/back_sms"
+            android:digits="1234567890"
+            android:maxLength="6"
+            android:layout_margin="20dp"
+            android:gravity="center"/>
+
+
+        <Button
+            android:id="@+id/btnOkSms"
+            style="@style/loginButton"
+            android:layout_gravity="center"
+            android:text="OK"
+            />
+
+
+
+
+
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -1,9 +1,7 @@
-package com.example.testregistr
+package com.example.testregistr.View
 
 
-import android.os.AsyncTask
 import android.os.Bundle
-import android.telephony.PhoneNumberFormattingTextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -13,11 +11,10 @@ import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testregistr.CONST.CONST.BASEURL
-import com.example.testregistr.ViewModel.CallBackInterface
+import com.example.testregistr.R
 import com.example.testregistr.ViewModel.CallBackRequest
 
 import com.example.testregistr.ViewModel.ClientAPI
-import com.example.testregistr.ViewModel.StartSend
 import com.hbb20.CountryCodePicker
 
 
@@ -28,6 +25,9 @@ class Main : AppCompatActivity(),CallBackRequest {
     private lateinit var btnSignIn : Button
     private lateinit var containerSignIn : LinearLayout
     private lateinit var progresLoad : ProgressBar
+    private lateinit var edSmsConfirmation : EditText
+    private lateinit var layout_sms_ID : View
+    private lateinit var layout_signin_ID : View
     val restClientApi = ClientAPI()
     val params: MutableMap<String, String> = HashMap()
     protected override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +38,10 @@ class Main : AppCompatActivity(),CallBackRequest {
         btnSignIn = findViewById(R.id.btnSignIn)
         containerSignIn = findViewById(R.id.containerSignIn)
         progresLoad = findViewById(R.id.progresLoad)
+        edSmsConfirmation = findViewById(R.id.edSmsConfirmation)
+
+        layout_sms_ID = findViewById(R.id.layout_sms_ID)
+        layout_signin_ID = findViewById(R.id.layout_signin_ID)
 
         //edNubmer!!.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 
@@ -73,6 +77,17 @@ class Main : AppCompatActivity(),CallBackRequest {
 
     override fun successReq(response: String?) {
         Log.e("CoolBack","--> " + response)
+        if (response.toString() == "201"){
+            //Добавить код из смс
+           // progresLoad.visibility = View.GONE
+            //layout_sms_ID.visibility = View.VISIBLE
+
+
+
+
+        }else{
+            Toast.makeText(this,"Error Server",Toast.LENGTH_SHORT).show()
+        }
 
 
     }
@@ -82,23 +97,7 @@ class Main : AppCompatActivity(),CallBackRequest {
     }
 
 
-/*    private fun getTemplates(text: String): String {
-        //add
-        return ""
-    }
 
-    override fun startSendPhone(phoneMap: MutableMap<String, String>) {
-        restClientApi.execute(BASEURL,)
-
-    }
-
-    override fun execute(
-        url: String?,
-        callback: CallBackRequest?,
-        phoneMap: MutableMap<String, String>
-    ) {
-
-    }*/
 
 
 }

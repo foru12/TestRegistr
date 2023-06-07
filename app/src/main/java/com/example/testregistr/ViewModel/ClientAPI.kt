@@ -11,15 +11,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class ClientAPI : SendAuth{
+class ClientAPI : CallBackInterface{
 
-    override fun sendAuthNumber(phoneMap:MutableMap<String, String>): Boolean {
 
-        var requestMassage = false
+    override fun execute(url: String?, callback: CallBackRequest?,phoneMap:MutableMap<String, String>) {
 
         Log.e("Start Post request","...")
         val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl(BASEURL)
+            .baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -36,21 +35,19 @@ class ClientAPI : SendAuth{
                 Log.e("Response","--> " + response.toString())
                 if (response.code().toString() == "201"){
                     Log.e("Success","true")
-                    requestMassage = true
-
-
+                    callback?.successReq(response.code().toString());
                 }
-                else requestMassage = false
+
 
             }
 
             override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Log.e("onFailure","--> " + t.toString())
-                requestMassage = false
+                callback?.errorReq(t.toString());
+
             }
 
         })
-        return requestMassage
 
     }
 
