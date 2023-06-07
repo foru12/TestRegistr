@@ -6,15 +6,14 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testregistr.CONST.CONST.BASEURL
 import com.example.testregistr.R
+import com.example.testregistr.ViewModel.API.ClientAPICode
 import com.example.testregistr.ViewModel.CallBackRequest
 
-import com.example.testregistr.ViewModel.ClientAPI
+import com.example.testregistr.ViewModel.API.ClientAPINumber
 import com.hbb20.CountryCodePicker
 
 
@@ -23,12 +22,14 @@ class Main : AppCompatActivity(),CallBackRequest {
     private lateinit var codePicker: CountryCodePicker
     private lateinit var edNubmer: EditText
     private lateinit var btnSignIn : Button
+    private lateinit var btnOkSms : Button
     private lateinit var edSmsConfirmation : EditText
 
     private lateinit var layout_sms_ID : View
     private lateinit var layout_signin_ID : View
     private lateinit var layout_loading_ID : View
-    val restClientApi = ClientAPI()
+    val restClientApiNumber = ClientAPINumber()
+    val restClientApiCode = ClientAPICode()
     val params: MutableMap<String, String> = HashMap()
     protected override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +37,7 @@ class Main : AppCompatActivity(),CallBackRequest {
         codePicker = findViewById(R.id.country_code)
         edNubmer = findViewById(R.id.edNubmer)
         btnSignIn = findViewById(R.id.btnSignIn)
+        btnOkSms = findViewById(R.id.btnOkSms)
 
         edSmsConfirmation = findViewById(R.id.edSmsConfirmation)
 
@@ -61,16 +63,28 @@ class Main : AppCompatActivity(),CallBackRequest {
 
                 //Запуск проверки на авторизацию
 
-                restClientApi.execute(BASEURL,this,params)
+                restClientApiNumber.execute(BASEURL,this,params)
             }else{
                 Toast.makeText(this,"Enter your phone number",Toast.LENGTH_SHORT).show()
             }
+        }
 
+        btnOkSms.setOnClickListener{
+            var code = edSmsConfirmation.text.toString()
+            if (code != ""){
+                //layout_signin_ID.visibility = View.GONE
+                //layout_loading_ID.visibility = View.VISIBLE
+                params["code"] = code
 
+                //Запуск проверки на авторизацию
 
-
+                restClientApiCode.execute(BASEURL,this,params)
+            }else{
+                Toast.makeText(this,"Enter your code",Toast.LENGTH_SHORT).show()
+            }
 
         }
+
 
 
     }
@@ -85,7 +99,18 @@ class Main : AppCompatActivity(),CallBackRequest {
 
 
 
-        }else{
+        }
+        else if (response.toString() == "200"){
+
+            Log.e("Your refresh token","")
+            Log.e("Your access token","")
+            Log.e("Your user id","")
+            Log.e("Your user exists","")
+
+        }
+
+
+        else{
             Toast.makeText(this,"Error Server",Toast.LENGTH_SHORT).show()
         }
 
