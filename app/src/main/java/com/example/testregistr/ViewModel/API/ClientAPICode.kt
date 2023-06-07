@@ -1,6 +1,7 @@
 package com.example.testregistr.ViewModel.API
 
 import android.util.Log
+import com.example.testregistr.Model.DataInfo
 import com.example.testregistr.ViewModel.CallBackInterface
 import com.example.testregistr.ViewModel.CallBackRequest
 import com.example.testregistr.ViewModel.Service.ServiceCode
@@ -26,22 +27,33 @@ class ClientAPICode : CallBackInterface {
         val retrofitAPI: ServiceCode = retrofit.create(ServiceCode::class.java)
 
 
-        val call: Call<ResponseBody?>? = retrofitAPI.loadRepoApiCode(phoneMap)
-        call?.enqueue(object : Callback<ResponseBody?> {
-            override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
-                Log.e("Response","--> " + response.body().toString())
-               // Log.e("Response","--> " + response.code().toString())
-               // Log.e("Response","--> " + response.headers())
-               // Log.e("Response","--> " + response.message())
-               // Log.e("Response","--> " + response.toString())
-               // Log.e("Success","true")
-                callback?.successReq(response.code().toString());
+        val call: Call<DataInfo?>? = retrofitAPI.loadRepoApiCode(phoneMap)
+        call?.enqueue(object : Callback<DataInfo?> {
+            override fun onResponse(call: Call<DataInfo?>, response: Response<DataInfo?>) {
+                Log.e("Response","--> " + (response.body()?.access_token))
+                Log.e("Response","--> " + (response.body()?.is_user_exists))
+                Log.e("Response","--> " + (response.body()?.user_id))
+                Log.e("Response","--> " + (response.body().toString()))
+
+
+
+                //val params: MutableMap<String, String> = HashMap()
+              //  params[response.] = ""
+
+
+                if (response.code().toString() == "200"){
+                    callback?.successReqCode(response.body()!!);
+
+
+                }
+
+
 
 
 
             }
 
-            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
+            override fun onFailure(call: Call<DataInfo?>, t: Throwable) {
                 Log.e("onFailure","--> " + t.toString())
                 //callback?.errorReq(t.toString());
 

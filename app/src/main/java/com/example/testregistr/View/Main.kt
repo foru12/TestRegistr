@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testregistr.CONST.CONST.BASEURL
+import com.example.testregistr.Model.DataInfo
 import com.example.testregistr.R
 import com.example.testregistr.ViewModel.API.ClientAPICode
 import com.example.testregistr.ViewModel.CallBackRequest
@@ -93,6 +94,7 @@ class Main : AppCompatActivity(),CallBackRequest {
         Log.e("CoolBack","--> " + response)
         if (response.toString() == "201"){
             //Добавить код из смс
+            Log.e("Check","true")
             layout_loading_ID.visibility = View.GONE
             layout_sms_ID.visibility = View.VISIBLE
 
@@ -100,22 +102,25 @@ class Main : AppCompatActivity(),CallBackRequest {
 
 
         }
-        else if (response.toString() == "200"){
-
-            Log.e("Your refresh token","")
-            Log.e("Your access token","")
-            Log.e("Your user id","")
-            Log.e("Your user exists","")
-
-        }
-
-
         else{
             Toast.makeText(this,"Error Server",Toast.LENGTH_SHORT).show()
         }
 
 
     }
+
+    override fun successReqCode(response: DataInfo) {
+        Log.e("CoolBack","--> " + response)
+        Log.e("CoolBack","--> " + response.access_token)
+        Log.e("CoolBack","--> " + response.refresh_token)
+        Log.e("CoolBack","--> " + response.is_user_exists)
+        Log.e("CoolBack","--> " + response.user_id)
+
+
+
+
+    }
+
 
     override fun errorReq(error: String?) {
         Log.e("CoolBack","--> " + error)
