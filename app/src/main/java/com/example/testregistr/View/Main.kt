@@ -1,6 +1,7 @@
 package com.example.testregistr.View
 
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -12,9 +13,8 @@ import com.example.testregistr.CONST.CONST.BASEURL
 import com.example.testregistr.Model.DataInfo
 import com.example.testregistr.R
 import com.example.testregistr.ViewModel.API.ClientAPICode
-import com.example.testregistr.ViewModel.CallBackRequest
-
 import com.example.testregistr.ViewModel.API.ClientAPINumber
+import com.example.testregistr.ViewModel.CallBackRequest
 import com.hbb20.CountryCodePicker
 
 
@@ -32,8 +32,18 @@ class Main : AppCompatActivity(),CallBackRequest {
     val restClientApiNumber = ClientAPINumber()
     val restClientApiCode = ClientAPICode()
     val params: MutableMap<String, String> = HashMap()
+
+
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var editor: SharedPreferences.Editor
+
     protected override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        sharedPreferences = getSharedPreferences("app", MODE_PRIVATE)
+        editor = sharedPreferences.edit()
+
+
         setContentView(R.layout.activity_main)
         codePicker = findViewById(R.id.country_code)
         edNubmer = findViewById(R.id.edNubmer)
@@ -109,12 +119,32 @@ class Main : AppCompatActivity(),CallBackRequest {
 
     }
 
-    override fun successReqCode(response: DataInfo) {
+    override fun successReqCode(response: DataInfo?) {
         Log.e("CoolBack","--> " + response)
-        Log.e("CoolBack","--> " + response.access_token)
-        Log.e("CoolBack","--> " + response.refresh_token)
-        Log.e("CoolBack","--> " + response.is_user_exists)
-        Log.e("CoolBack","--> " + response.user_id)
+
+
+
+        editor.putString("access_token", response?.access_token)
+        editor.putString("refresh_token", response?.refresh_token)
+        response?.is_user_exists?.let { editor.putBoolean("is_user_exists", it) }
+        response?.user_id?.let { editor.putInt("user_id", it) }
+        editor.apply()
+
+
+
+        Log.e("Save", "access_token" + "--> "+ sharedPreferences.getString("access_token", "")!!)
+        Log.e("Save", "refresh_token" + "--> "+sharedPreferences.getString("refresh_token", "")!!)
+        Log.e("Save","is_user_exists" + "--> "+ sharedPreferences.getString("is_user_exists", "")!!)
+        Log.e("Save", "user_id" + "--> "+sharedPreferences.getString("user_id", "")!!)
+
+
+        if (sharedPreferences.getBoolean("is_user_exists",false)){
+            //Запуск профиля
+
+        }else{
+            //Запуск регистрации 
+        }
+
 
 
 

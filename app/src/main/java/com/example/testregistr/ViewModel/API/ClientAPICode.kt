@@ -42,7 +42,7 @@ class ClientAPICode : CallBackInterface {
 
 
                 if (response.code().toString() == "200"){
-                    callback?.successReqCode(response.body()!!);
+                    response.body()?.let { callback?.successReqCode(it) };
 
 
                 }

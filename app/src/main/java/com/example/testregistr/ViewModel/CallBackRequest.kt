@@ -8,6 +8,6 @@ import org.json.JSONObject
 
 interface CallBackRequest {
     fun successReq(response: String?)
-    fun successReqCode(response:DataInfo)
+    fun successReqCode(response:DataInfo?)
     fun errorReq(error: String?)
 }
