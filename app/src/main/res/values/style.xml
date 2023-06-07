@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-
     <!--designs for login and register-->
     <style name="parent">
         <item name="android:layout_width">match_parent</item>
@@ -32,6 +30,7 @@
     </style>
 
     <style name="modifiedEditText" parent="parent">
+
         <item name="android:textSize">@dimen/newsMoreTextSize</item>
         <item name="android:backgroundTint">@color/primaryTextColor</item>
     </style>
@@ -44,11 +43,9 @@
     <style name="loginButton" parent="viewParent">
         <item name="android:background">@drawable/login_button_bk</item>
         <item name="android:textColor">@color/whiteTextColor</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="paddingStart">30dp</item>
-        <item name="paddingEnd">30dp</item>
-        <item name="android:paddingTop">15dp</item>
-        <item name="android:paddingBottom">15dp</item>
+
         <item name="android:textStyle">bold</item>
     </style>
+
+
 </resources>

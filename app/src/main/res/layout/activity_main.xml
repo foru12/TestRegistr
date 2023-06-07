@@ -49,8 +49,12 @@
                     android:layout_gravity="center"
                     android:text="@string/app_name"
                     android:layout_marginTop="40dp"/>
-                <include
-                    layout="@layout/layout_register"/>
+
+                <include layout="@layout/layout_register"/>
+
+
+
+
 
             </LinearLayout>
         </RelativeLayout>
