@@ -3,6 +3,7 @@ package com.example.testregistr.ViewModel
 import android.util.Log
 import com.example.testregistr.CONST.CONST.BASEURL
 import com.example.testregistr.Model.DataInfo
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,10 +21,11 @@ class ClientAPI : SendAuth{
             .build()
 
         val retrofitAPI: Service = retrofit.create(Service::class.java)
-        var modal = DataInfo(phone)
-        val call: Call<DataInfo?>? = retrofitAPI.loadRepo(modal)
-        call?.enqueue(object : Callback<DataInfo?> {
-            override fun onResponse(call: Call<DataInfo?>, response: Response<DataInfo?>) {
+        val params: MutableMap<String, String> = HashMap()
+        params["phone"] = "0"
+        val call: Call<ResponseBody?>? = retrofitAPI.loadRepoApi(params)
+        call?.enqueue(object : Callback<ResponseBody?> {
+            override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 Log.e("Response","--> " + response.body())
                 Log.e("Response","--> " + response.code().toString())
                 Log.e("Response","--> " + response.headers())
@@ -32,7 +34,7 @@ class ClientAPI : SendAuth{
 
             }
 
-            override fun onFailure(call: Call<DataInfo?>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseBody?>, t: Throwable) {
                 Log.e("onFailure","--> " + t.toString())
             }
 
