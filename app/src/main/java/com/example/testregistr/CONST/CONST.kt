@@ -1,5 +1,8 @@
 package com.example.testregistr.CONST
 
 object CONST {
-    val BASEURL = "https://plannerok.ru/docs#/"
+    const val BASEURL = "https://plannerok.ru/"
+    const val SENDAUTHCODEURL = "api/v1/users/send-auth-code/"
+
+
 }

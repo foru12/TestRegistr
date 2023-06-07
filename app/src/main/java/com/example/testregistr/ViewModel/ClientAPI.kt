@@ -13,6 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class ClientAPI : SendAuth{
 
     override fun sendAuthNumber(phone:String) {
+        Log.e("Start Post request","...")
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(BASEURL)
             .addConverterFactory(GsonConverterFactory.create())
@@ -24,6 +25,10 @@ class ClientAPI : SendAuth{
         call?.enqueue(object : Callback<DataInfo?> {
             override fun onResponse(call: Call<DataInfo?>, response: Response<DataInfo?>) {
                 Log.e("Response","--> " + response.body())
+                Log.e("Response","--> " + response.code().toString())
+                Log.e("Response","--> " + response.headers())
+                Log.e("Response","--> " + response.message())
+                Log.e("Response","--> " + response.toString())
 
             }
 
