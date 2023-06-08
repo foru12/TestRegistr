@@ -150,7 +150,8 @@ class Profile : AppCompatActivity(), CallBackRequest {
 
         jsonObject.put("birthday", sharedPreferences.getString("birthday",""))
         jsonObject.put("city", sharedPreferences.getString("city",""))
-        jsonObject.put("avatar", "")
+        jsonObject.put("avatar", selectedImagePath)
+        jsonObject.put("avatarFile", selectedImagePath)
 
         getToken()
 
