@@ -5,15 +5,14 @@ import com.example.testregistr.Model.DataInfo
 import com.example.testregistr.ViewModel.CallBackInterface
 import com.example.testregistr.ViewModel.CallBackRequest
 import com.example.testregistr.ViewModel.Service.ServiceCode
-import com.example.testregistr.ViewModel.Service.ServicePhone
-import okhttp3.ResponseBody
+import com.example.testregistr.ViewModel.Service.ServiceRegistr
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ClientAPICode : CallBackInterface {
+class ClientAPIRegistr : CallBackInterface {
 
 
     override fun execute(url: String?, callback: CallBackRequest?, phoneMap:MutableMap<String, String>) {
@@ -24,27 +23,36 @@ class ClientAPICode : CallBackInterface {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val retrofitAPI: ServiceCode = retrofit.create(ServiceCode::class.java)
+        val retrofitAPI: ServiceRegistr = retrofit.create(ServiceRegistr::class.java)
 
 
-        val call: Call<DataInfo?>? = retrofitAPI.loadRepoApiCode(phoneMap)
+        val call: Call<DataInfo?>? = retrofitAPI.loadRepoRegistr(phoneMap)
         call?.enqueue(object : Callback<DataInfo?> {
             override fun onResponse(call: Call<DataInfo?>, response: Response<DataInfo?>) {
+
+                Log.e("Response","--> " + (response))
+
+
+
+
+
+
+
                 Log.e("Response","--> " + (response.body()?.access_token))
-                Log.e("Response","--> " + (response.body()?.is_user_exists))
+                Log.e("Response","--> " + (response.body()?.refresh_token))
                 Log.e("Response","--> " + (response.body()?.user_id))
-                Log.e("Response","--> " + (response.body().toString()))
+                Log.e("Response","--> " + (response.code().toString()))
 
+                if (response.code().toString() != "201"){
 
+                    callback?.errorReq("Error");
 
-
-
-
-                if (response.code().toString() == "200"){
-                    response.body()?.let { callback?.successReqCode(it) };
-
-
-                }else    callback?.errorReq("Error");
+                }else if (response.code() == null){
+                    callback?.errorReq("Error");
+                }
+                else{
+                    callback?.successReqRegistr(response.body())
+                }
 
 
 

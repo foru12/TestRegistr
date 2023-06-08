@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/loginCard"
+    app:cardCornerRadius="@dimen/loginCardRadius"
+    android:elevation="5dp"
+    android:layout_gravity="center"
+    android:layout_marginTop="@dimen/loginViewsMargin"
+    android:layout_marginBottom="@dimen/loginViewsMargin"
+    android:background="@color/whiteCardColor">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <LinearLayout
+        style="@style/linearParent"
+        android:layout_gravity="center"
+
+        android:padding="@dimen/loginViewsMargin">
+
+
+
+        <ImageView
+            android:id="@+id/imAvatar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:src="@drawable/avatar"/>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/txtNumberStr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Number"
+                android:textSize="20sp"/>
+
+
+            <EditText
+                android:id="@+id/txtNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtNumberStr"
+                android:enabled="false"
+                android:layout_marginTop="5dp"
+
+
+                android:background="@drawable/back_sms"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="36sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/txtNameStr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textSize="20sp"/>
+
+
+            <EditText
+                android:id="@+id/txtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtNameStr"
+                android:enabled="false"
+
+                android:layout_marginTop="5dp"
+
+
+                android:background="@drawable/back_sms"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="36sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/txtCityStr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="City"
+                android:textSize="20sp"/>
+
+
+            <EditText
+                android:id="@+id/txtCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtCityStr"
+
+                android:layout_marginTop="5dp"
+                android:enabled="false"
+
+
+                android:background="@drawable/back_sms"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="36sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/txtDateStr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date of Birth"
+                android:textSize="20sp"/>
+
+
+            <EditText
+                android:id="@+id/txtDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtDateStr"
+                android:enabled="false"
+
+                android:layout_marginTop="5dp"
+
+
+                android:background="@drawable/back_sms"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="36sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/txtZodiacStr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zodiac sign"
+                android:textSize="20sp"/>
+
+
+            <EditText
+                android:id="@+id/txtZodiac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtZodiacStr"
+
+                android:layout_marginTop="5dp"
+
+                android:enabled="false"
+
+                android:background="@drawable/back_sms"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="36sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/txtAboutStr"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About me"
+                android:textSize="20sp"/>
+
+
+            <EditText
+                android:id="@+id/txtAbout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtAboutStr"
+                android:enabled="false"
+
+                android:layout_marginTop="5dp"
+
+
+                android:background="@drawable/back_sms"
+                android:padding="10dp"
+                android:text=""
+                android:textSize="36sp" />
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

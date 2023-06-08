@@ -2,21 +2,23 @@ package com.example.testregistr.ViewModel.API
 
 import android.util.Log
 import com.example.testregistr.Model.DataInfo
+import com.example.testregistr.Model.DataMe
 import com.example.testregistr.ViewModel.CallBackInterface
+import com.example.testregistr.ViewModel.CallBackInterfaceRefresh
 import com.example.testregistr.ViewModel.CallBackRequest
 import com.example.testregistr.ViewModel.Service.ServiceCode
-import com.example.testregistr.ViewModel.Service.ServicePhone
-import okhttp3.ResponseBody
+import com.example.testregistr.ViewModel.Service.ServiceRefresh
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class ClientAPICode : CallBackInterface {
+class ClientAPIRefresh : CallBackInterfaceRefresh {
 
 
-    override fun execute(url: String?, callback: CallBackRequest?, phoneMap:MutableMap<String, String>) {
+
+    override fun executeRefresh(url: String?, callback: CallBackRequest?, token: String) {
 
         Log.e("Start Post request","...")
         val retrofit: Retrofit = Retrofit.Builder()
@@ -24,10 +26,14 @@ class ClientAPICode : CallBackInterface {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val retrofitAPI: ServiceCode = retrofit.create(ServiceCode::class.java)
+        val retrofitAPI: ServiceRefresh = retrofit.create(ServiceRefresh::class.java)
 
 
-        val call: Call<DataInfo?>? = retrofitAPI.loadRepoApiCode(phoneMap)
+
+
+
+        val call: Call<DataInfo?>? = retrofitAPI.loadRepoRefresh("Bearer " + token)
+        Log.e("Добавляем токен","--> " + "Bearer : " + token)
         call?.enqueue(object : Callback<DataInfo?> {
             override fun onResponse(call: Call<DataInfo?>, response: Response<DataInfo?>) {
                 Log.e("Response","--> " + (response.body()?.access_token))
@@ -37,6 +43,9 @@ class ClientAPICode : CallBackInterface {
 
 
 
+                Log.e("Новый токен -->", "" + response.body()?.access_token)
+
+
 
 
 
@@ -44,8 +53,8 @@ class ClientAPICode : CallBackInterface {
                     response.body()?.let { callback?.successReqCode(it) };
 
 
-                }else    callback?.errorReq("Error");
-
+                }
+                else callback?.errorReq("Error");
 
 
 
@@ -60,6 +69,7 @@ class ClientAPICode : CallBackInterface {
             }
 
         })
+
 
     }
 

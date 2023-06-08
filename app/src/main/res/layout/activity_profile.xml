@@ -12,6 +12,18 @@
             style="@style/parent">
 
 
+            <ImageView
+                android:id="@+id/imEdit"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/edit"
+                android:translationZ="10dp" />
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -51,23 +63,11 @@
                     android:layout_marginTop="40dp"/>
 
                 <include
-                    android:id="@+id/layout_sms_ID"
-                    layout="@layout/layout_sms"
-                    android:visibility="gone"
+                    android:id="@+id/layout_profile_ID"
+                    layout="@layout/layout_profile"
+                    android:visibility="visible"
                     />
-                <include
-                    android:id="@+id/layout_signin_ID"
-                    layout="@layout/layout_signin"
-                    android:visibility="visible"/>
-                <include
-                    android:id="@+id/layout_loading_ID"
-                    layout="@layout/layout_loading"
-                    android:visibility="gone"/>
 
-                <include
-                    android:id="@+id/layout_regist_ID"
-                    layout="@layout/layout_register"
-                    android:visibility="gone"/>
 
 
 

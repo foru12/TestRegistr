@@ -38,6 +38,8 @@ class ClientAPINumber : CallBackInterface {
                     Log.e("Success","true")
                     callback?.successReq(response.code().toString());
                 }
+                else  callback?.errorReq("Error");
+
 
 
 
