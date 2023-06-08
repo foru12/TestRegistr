@@ -2,10 +2,8 @@ package com.example.testregistr.ViewModel.API
 
 import android.util.Log
 import com.example.testregistr.Model.DataMe
-import com.example.testregistr.ViewModel.CallBackInterfaceRefresh
-import com.example.testregistr.ViewModel.CallBackInterfaceUpdate
-import com.example.testregistr.ViewModel.CallBackRequest
-import com.example.testregistr.ViewModel.Service.ServiceMe
+import com.example.testregistr.ViewModel.CallBack.CallBackInterfaceUpdate
+import com.example.testregistr.ViewModel.CallBack.CallBackRequest
 import com.example.testregistr.ViewModel.Service.ServiceUpdate
 import org.json.JSONObject
 import retrofit2.Call
@@ -19,7 +17,7 @@ class ClientAPIMeUpdate : CallBackInterfaceUpdate {
 
 
 
-    override fun executeUpdate(url: String?, callback: CallBackRequest?,token : String,jsonObj : JSONObject) {
+    override fun executeUpdate(url: String?, callback: CallBackRequest?, token : String, jsonObj : JSONObject) {
         Log.e("Start Post request","...")
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(url)

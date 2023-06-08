@@ -14,7 +14,7 @@ import com.example.testregistr.Model.DataMe
 import com.example.testregistr.R
 import com.example.testregistr.ViewModel.API.ClientAPIMeUpdate
 import com.example.testregistr.ViewModel.API.ClientAPIRefresh
-import com.example.testregistr.ViewModel.CallBackRequest
+import com.example.testregistr.ViewModel.CallBack.CallBackRequest
 import org.json.JSONObject
 
 class Profile : AppCompatActivity(), CallBackRequest {

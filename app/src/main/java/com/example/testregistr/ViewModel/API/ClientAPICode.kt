@@ -2,11 +2,9 @@ package com.example.testregistr.ViewModel.API
 
 import android.util.Log
 import com.example.testregistr.Model.DataInfo
-import com.example.testregistr.ViewModel.CallBackInterface
-import com.example.testregistr.ViewModel.CallBackRequest
+import com.example.testregistr.ViewModel.CallBack.CallBackInterface
+import com.example.testregistr.ViewModel.CallBack.CallBackRequest
 import com.example.testregistr.ViewModel.Service.ServiceCode
-import com.example.testregistr.ViewModel.Service.ServicePhone
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

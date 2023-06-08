@@ -1,4 +1,4 @@
-package com.example.testregistr.View
+package com.example.testregistr.ViewModel.TextEdit
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,7 +9,9 @@ class CurrencyTextWatcher : TextWatcher {
         var ignore = false
         private val numPlace = 'X'
         override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-        override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+        override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+
+        }
         override fun afterTextChanged(editable: Editable) {
             if (!ignore) {
                 removeFormat(editable.toString())
@@ -52,13 +54,13 @@ class CurrencyTextWatcher : TextWatcher {
 
         private fun getTemplate(text: String): String {
             if (text.startsWith("380")) {
-                return "+XXX (XXX) XX-XX-XX"
+                return "XXX (XXX) XX-XX-XX"
             }
             if (text.startsWith("7")) {
-                return "+X (XXX) XXX-XX-XX"
+                return "X (XXX) XXX-XX-XX"
             }
             return if (text.startsWith("49")) {
-                "+XX-XX-XXX-XXXXX"
-            } else "+XXX (XXX) XX-XX-XX"
+                "XX-XX-XXX-XXXXX"
+            } else "XXX (XXX) XX-XX-XX"
         }
 }

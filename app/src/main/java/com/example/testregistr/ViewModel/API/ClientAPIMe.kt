@@ -1,13 +1,9 @@
 package com.example.testregistr.ViewModel.API
 
 import android.util.Log
-import com.example.testregistr.CONST.CONST.acessToken
-import com.example.testregistr.Model.DataInfo
 import com.example.testregistr.Model.DataMe
-import com.example.testregistr.ViewModel.CallBackInterface
-import com.example.testregistr.ViewModel.CallBackInterfaceRefresh
-import com.example.testregistr.ViewModel.CallBackRequest
-import com.example.testregistr.ViewModel.Service.ServiceCode
+import com.example.testregistr.ViewModel.CallBack.CallBackInterfaceRefresh
+import com.example.testregistr.ViewModel.CallBack.CallBackRequest
 import com.example.testregistr.ViewModel.Service.ServiceMe
 import retrofit2.Call
 import retrofit2.Callback

@@ -1,8 +1,8 @@
 package com.example.testregistr.ViewModel.API
 
 import android.util.Log
-import com.example.testregistr.ViewModel.CallBackInterface
-import com.example.testregistr.ViewModel.CallBackRequest
+import com.example.testregistr.ViewModel.CallBack.CallBackInterface
+import com.example.testregistr.ViewModel.CallBack.CallBackRequest
 import com.example.testregistr.ViewModel.Service.ServicePhone
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -30,10 +30,7 @@ class ClientAPINumber : CallBackInterface {
         call?.enqueue(object : Callback<ResponseBody?> {
             override fun onResponse(call: Call<ResponseBody?>, response: Response<ResponseBody?>) {
                 Log.e("Response","--> " + response.body())
-                Log.e("Response","--> " + response.code().toString())
-                Log.e("Response","--> " + response.headers())
-                Log.e("Response","--> " + response.message())
-                Log.e("Response","--> " + response.toString())
+
                 if (response.code().toString() == "201"){
                     Log.e("Success","true")
                     callback?.successReq(response.code().toString());

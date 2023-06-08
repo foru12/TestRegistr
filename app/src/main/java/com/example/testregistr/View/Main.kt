@@ -1,6 +1,7 @@
 package com.example.testregistr.View
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
@@ -13,32 +14,34 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.testregistr.CONST.CONST.BASEURL
-import com.example.testregistr.CONST.CONST.acessToken
 import com.example.testregistr.CONST.CONST.refreshToken
 import com.example.testregistr.Model.DataInfo
 import com.example.testregistr.Model.DataMe
 import com.example.testregistr.R
 import com.example.testregistr.ViewModel.API.*
-import com.example.testregistr.ViewModel.CallBackRequest
+import com.example.testregistr.ViewModel.CallBack.CallBackRequest
+import com.example.testregistr.ViewModel.TextEdit.CurrencyTextWatcher
 import com.hbb20.CountryCodePicker
+import java.util.*
 
 
-class Main : AppCompatActivity(),CallBackRequest {
+class Main : AppCompatActivity(), CallBackRequest {
     //country cod
     private lateinit var codePicker: CountryCodePicker
-    private lateinit var edNubmer: EditText
-    private lateinit var btnSignIn : Button
-    private lateinit var btnOkSms : Button
-    private lateinit var btnRegistr : Button
-    private lateinit var edSmsConfirmation : EditText
-    private lateinit var edUserNameRegistr : EditText
-    private lateinit var edNumberRegistr : EditText
-    private lateinit var edNameRegistr : EditText
 
-    private lateinit var layout_sms_ID : View
-    private lateinit var layout_signin_ID : View
-    private lateinit var layout_loading_ID : View
-    private lateinit var layout_regist_ID : View
+    private lateinit var edNubmer: EditText
+    private lateinit var btnSignIn: Button
+    private lateinit var btnOkSms: Button
+    private lateinit var btnRegistr: Button
+    private lateinit var edSmsConfirmation: EditText
+    private lateinit var edUserNameRegistr: EditText
+    private lateinit var edNumberRegistr: EditText
+    private lateinit var edNameRegistr: EditText
+
+    private lateinit var layout_sms_ID: View
+    private lateinit var layout_signin_ID: View
+    private lateinit var layout_loading_ID: View
+    private lateinit var layout_regist_ID: View
     val restClientApiNumber = ClientAPINumber()
     val restClientApiCode = ClientAPICode()
     val restClientApiRegistr = ClientAPIRegistr()
@@ -51,14 +54,99 @@ class Main : AppCompatActivity(),CallBackRequest {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var editor: SharedPreferences.Editor
 
+
     protected override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
+
+        setId()
+        setClick()
+
+
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private fun setClick() {
+
+        btnSignIn.setOnClickListener {
+            //Добавить проверку на кол во симовлов в номере
+            var number = codePicker.fullNumber + edNubmer.text.toString()
+            if (edNubmer.text.toString() != "") {
+                layout_signin_ID.visibility = View.GONE
+                layout_loading_ID.visibility = View.VISIBLE
+                params["phone"] = number
+
+                Log.e("Запуск проверки номера", "...")
+                //Запуск проверки на авторизацию
+
+                restClientApiNumber.execute(BASEURL, this, params)
+            } else {
+
+                edNubmer.getBackground().mutate()
+                    .setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
+                edNubmer.setTextColor(Color.RED)
+
+                Toast.makeText(this, "Enter your phone number", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        btnOkSms.setOnClickListener {
+            var code = edSmsConfirmation.text.toString()
+            if (code != "") {
+                layout_signin_ID.visibility = View.GONE
+                layout_loading_ID.visibility = View.VISIBLE
+                params["code"] = code
+
+                //Запуск проверки на авторизацию
+
+                Log.e("Проверка на наличие такого номера в базе", "...")
+
+                restClientApiCode.execute(BASEURL, this, params)
+            } else {
+                Toast.makeText(this, "Enter your code", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+        btnRegistr.setOnClickListener {
+            var number = edNumberRegistr.text.toString()
+            var name = edNameRegistr.text.toString()
+            var userName = edUserNameRegistr.text.toString()
+
+            if (number != "" && name != "" && userName != "") {
+
+                Log.e("Click", "Registr" + "...")
+
+                paramsRegistr["phone"] = number
+                paramsRegistr["name"] = name
+                paramsRegistr["username"] = userName
+                Log.e("Отправялем данные на сервер",  "...")
+                Log.e("Registr", "" + "-->" + paramsRegistr.toString())
+
+                restClientApiRegistr.execute(BASEURL, this, paramsRegistr)
+            } else {
+                Toast.makeText(this, "Enter your info", Toast.LENGTH_SHORT).show()
+            }
+
+
+        }
+
+        edNubmer.setOnClickListener {
+            edNubmer.setTextColor(Color.BLACK)
+            edNubmer.getBackground().mutate()
+                .setColorFilter(R.color.black, PorterDuff.Mode.SRC_ATOP);
+        }
+
+        edNubmer.addTextChangedListener(CurrencyTextWatcher())
+        codePicker.registerCarrierNumberEditText(edNubmer)
+
+
+    }
+
+    private fun setId() {
         sharedPreferences = getSharedPreferences("app", MODE_PRIVATE)
         editor = sharedPreferences.edit()
-
-
-        setContentView(R.layout.activity_main)
         codePicker = findViewById(R.id.country_code)
         edNubmer = findViewById(R.id.edNubmer)
         edUserNameRegistr = findViewById(R.id.edUserNameRegistr)
@@ -78,255 +166,130 @@ class Main : AppCompatActivity(),CallBackRequest {
         layout_regist_ID = findViewById(R.id.layout_regist_ID)
 
 
-
-        params["phone"] = ""
-
-
-
-        btnSignIn.setOnClickListener {
-
-
-            //Добавить проверку на кол во симовлов в номере
-            var number = edNubmer.text.toString()
-            if (number != ""){
-                layout_signin_ID.visibility = View.GONE
-                layout_loading_ID.visibility = View.VISIBLE
-                params["phone"] = number
-
-                //Запуск проверки на авторизацию
-
-                restClientApiNumber.execute(BASEURL,this,params)
-            }else{
-              //  edNubmer.setBackgroundColor(Color.RED)
-                edNubmer.getBackground().mutate().setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);
-
-                Toast.makeText(this,"Enter your phone number",Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        btnOkSms.setOnClickListener{
-            var code = edSmsConfirmation.text.toString()
-            if (code != ""){
-                layout_signin_ID.visibility = View.GONE
-                layout_loading_ID.visibility = View.VISIBLE
-                params["code"] = code
-
-                //Запуск проверки на авторизацию
-
-                restClientApiCode.execute(BASEURL,this,params)
-            }else{
-                Toast.makeText(this,"Enter your code",Toast.LENGTH_SHORT).show()
-            }
-
-        }
-
-        btnRegistr.setOnClickListener {
-            var number = edNumberRegistr.text.toString()
-            var name = edNameRegistr.text.toString()
-            var userName = edUserNameRegistr.text.toString()
-
-            if (number != "" && name != "" && userName != ""){
-
-                Log.e("Click","Registr" + "...")
-
-                paramsRegistr["phone"] = number
-                paramsRegistr["name"] = name
-                paramsRegistr["username"] = userName
-
-                Log.e("Click","Registr" + "-->" + paramsRegistr.toString())
-
-                restClientApiRegistr.execute(BASEURL,this,paramsRegistr)
-            }else{
-                Toast.makeText(this,"Enter your info",Toast.LENGTH_SHORT).show()
-            }
-
-
-        }
-
-
-
-
-
-
     }
 
     override fun successReq(response: String?) {
-        Log.e("CoolBack","--> " + response)
-        if (response.toString() == "201"){
+        Log.e("CoolBack", "--> " + response)
+        if (response.toString() == "201") {
             //Добавить код из смс
-            Log.e("Check","true")
+            Log.e("Проверка номера успешно", "...")
             layout_loading_ID.visibility = View.GONE
             layout_sms_ID.visibility = View.VISIBLE
 
 
-
-
-        }
-        else{
-            Toast.makeText(this,"Error Server",Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Error Server", Toast.LENGTH_SHORT).show()
         }
 
 
     }
 
     override fun successReqRegistr(response: DataInfo?) {
-
-
-        Log.e("Сохраняем токен2",  "-->" + response?.access_token.toString())
-
-
-
-        editor.putString("access_token", response?.access_token)
-        editor.putString("refresh_token", response?.refresh_token)
-        editor.apply()
-        updateToken()
-
-
-        if (response?.is_user_exists == false){
-
+        Log.e("Сохраняем токен после регистрации", "-->" + response?.access_token.toString())
+        saveTokens(response?.access_token,response?.refresh_token)
+        if (response?.is_user_exists == false) {
             startProfile(response?.access_token.toString())
-
-
         }
-
-
-
-
-
     }
 
-    private fun updateToken() {
-      //  acessToken = sharedPreferences.getString("access_token","").toString()
-      //  refreshToken = sharedPreferences.getString("refresh_token","").toString()
-
-
-
-
-    }
 
     override fun successReqCode(response: DataInfo?) {
+        Log.e("CoolBack", "--> " + response)
+        Log.e(
+            "Сохраняем токены",
+            "-->" + "\n" + "access_token:" + response?.access_token.toString() + "\n" + "access_token:" + response?.access_token.toString()
+        )
 
-        Log.e("CoolBack","--> " + response)
-
-
-        Log.e("Сохраняем токен",  "-->" + response?.access_token.toString())
-
-        editor.putString("access_token", response?.access_token)
-        editor.putString("refresh_token", response?.refresh_token)
-        editor.apply()
-
-        updateToken()
-        //переделать рефреш
-
-
-
-
+        saveTokens(response?.access_token, response?.refresh_token)
 
         response?.is_user_exists?.let { editor.putBoolean("is_user_exists", it) }
         response?.user_id?.let { editor.putInt("user_id", it) }
         editor.apply()
 
+        Log.e(
+            "Сохраняем другие значения",
+            "-->" + "\n" + "is_user_exists:" + response?.is_user_exists.toString() + "\n" + "user_id:" + response?.user_id.toString()
+        )
 
-        Log.e("Save","is_user_exists" + "--> "+ sharedPreferences.getBoolean("is_user_exists", false)!!)
-        Log.e("Save", "user_id" + "--> "+sharedPreferences.getInt("user_id", 0)!!)
+        Log.e(
+            "Save",
+            "is_user_exists" + "--> " + sharedPreferences.getBoolean("is_user_exists", false)!!
+        )
+        Log.e("Save", "user_id" + "--> " + sharedPreferences.getInt("user_id", 0)!!)
 
-
-        if (sharedPreferences.getBoolean("is_user_exists",false)){
+        if (sharedPreferences.getBoolean("is_user_exists", false)) {
             //Запуск профиля
-            Log.e("Запуск профиля","...")
-
-
+            Log.e("Запуск профиля", "...")
             layout_sms_ID.visibility = View.GONE
-
-
             startProfile(response?.access_token.toString())
-
-
-        }else{
+        } else {
             //Запуск регистрации
-            Log.e("Запуск регистрации","...")
-
-
-
-
-
-
-
-
-
-
-
+            Log.e("Запуск регистрации", "...")
             layout_sms_ID.visibility = View.GONE
             layout_loading_ID.visibility = View.GONE
             layout_regist_ID.visibility = View.VISIBLE
-
-
-
         }
+    }
 
-
-
-
+    private fun saveTokens(accessToken: String?, refreshToken: String?) {
+        editor.putString("access_token", accessToken)
+        editor.putString("refresh_token", refreshToken)
+        editor.apply()
 
     }
 
-    private fun startProfile(token:String) {
-        Log.e("StartProfile","-->"  + "access_token = " + sharedPreferences.getString("access_token","").toString())
-
-
-
-        restClientApiMe.executeRefresh(BASEURL,this,token)
-
-
+    private fun startProfile(token: String) {
+        restClientApiMe.executeRefresh(BASEURL, this, token)
     }
 
     override fun successReqMe(response: DataMe?) {
 
         Log.e("CallBack", "--> " + response.toString())
 
-        //если ничего не пришло то нужно обновить токен
-        if (response == null){
-            Log.e("Опа!","Токен пора бы и обновить вообще-то")
+
+        if (response == null) {
+            Log.e("Опа!", "Токен пора бы и обновить вообще-то")
 
 
-            restClientApiRefresh.executeRefresh(BASEURL,this, refreshToken)
+            restClientApiRefresh.executeRefresh(BASEURL, this, refreshToken)
 
 
-        }
-        else{
+        } else {
             Log.e("Callback", "--> " + "Save info about me")
             Log.e("Callback", "--> " + "Было бы что сохранять")
+            Log.e("Загружаем данные профиля", "..." + "")
 
             //save Data Me
-            editor.putString("name", response?.name)
-            editor.putString("username", response?.username)
-            editor.putString("birthday", response?.birthday)
-            editor.putString("city", response?.city)
-            editor.putString("vk", response?.vk)
-            editor.putString("instagram", response?.instagram)
-            editor.putString("status", response?.status)
-            editor.putString("avatar", response?.avatar)
-
-            response?.id?.let { editor.putInt("id", it) }
-            editor.putString("last", response?.last.toString())
-            response?.online?.let { editor.putBoolean("online", it) }
-            editor.putString("created",response?.created.toString())
-            editor.putString("phone",response?.phone.toString())
-
-
-
-            response?.completed_task?.let { editor.putInt("completed_task", it) }
-
-            editor.apply()
+            saveData(response)
             //переход в профиль
-            startActivity(Intent(this,Profile::class.java))
+            startActivity(Intent(this, Profile::class.java))
             finish()
         }
 
 
+    }
+
+    private fun saveData(response: DataMe?) {
+        editor.putString("name", response?.name)
+        editor.putString("username", response?.username)
+        editor.putString("birthday", response?.birthday)
+        editor.putString("city", response?.city)
+        editor.putString("vk", response?.vk)
+        editor.putString("instagram", response?.instagram)
+        editor.putString("status", response?.status)
+        editor.putString("avatar", response?.avatar)
+
+        response?.id?.let { editor.putInt("id", it) }
+        editor.putString("last", response?.last.toString())
+        response?.online?.let { editor.putBoolean("online", it) }
+        editor.putString("created", response?.created.toString())
+        editor.putString("phone", response?.phone.toString())
 
 
 
+        response?.completed_task?.let { editor.putInt("completed_task", it) }
+
+        editor.apply()
     }
 
     override fun onBackPressed() {
@@ -335,12 +298,9 @@ class Main : AppCompatActivity(),CallBackRequest {
 
 
     override fun errorReq(error: String?) {
-        Log.e("CoolBack","--> " + error)
-        Toast.makeText(this,error,Toast.LENGTH_SHORT).show()
+        Log.e("CoolBack", "--> " + error)
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
     }
-
-
-
 
 
 }

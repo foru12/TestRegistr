@@ -1,4 +1,4 @@
-package com.example.testregistr.ViewModel
+package com.example.testregistr.ViewModel.CallBack
 
 import com.example.testregistr.Model.DataInfo
 import com.example.testregistr.Model.DataMe
