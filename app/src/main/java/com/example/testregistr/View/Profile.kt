@@ -8,6 +8,8 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.example.testregistr.CONST.CONST.AVATARURLIMAGE
 import com.example.testregistr.CONST.CONST.BASEURL
 import com.example.testregistr.Model.DataInfo
 import com.example.testregistr.Model.DataMe
@@ -113,26 +115,17 @@ class Profile : AppCompatActivity(), CallBackRequest {
     }
 
     private fun setEnable(b: Boolean) {
-
-        // txtNumber.isEnabled = b
-        // txtName.isEnabled = b
         txtCity.isEnabled = b
         txtDate.isEnabled = b
         txtZodiac.isEnabled = b
         txtAbout.isEnabled = b
-
-
     }
 
     private fun setEdit(backEdit: Int) {
-        //txtNumber.setBackgroundResource(backEdit)
-        //txtName.setBackgroundResource(backEdit)
         txtCity.setBackgroundResource(backEdit)
         txtDate.setBackgroundResource(backEdit)
         txtZodiac.setBackgroundResource(backEdit)
         txtAbout.setBackgroundResource(backEdit)
-
-
     }
 
 
@@ -140,15 +133,27 @@ class Profile : AppCompatActivity(), CallBackRequest {
 
 
     private fun setStartInfo() {
-
-
+        Log.e("Загружаем данные профиля","...")
         txtNumber.text = sharedPreferences.getString("phone", "none")!!.toEditable()
         txtName.text = sharedPreferences.getString("name", "none")!!.toEditable()
         txtCity.text = sharedPreferences.getString("city", "none")!!.toEditable()
         txtDate.text = sharedPreferences.getString("birthday", "none")!!.toEditable()
-        //txtZodiac.text = sharedPreferences.getString("","none")!!.toEditable()
-        // txtAbout.text = sharedPreferences.getString("vk","none") + sharedPreferences.getString("instagram","none")
-        //imAvatar.text = sharedPreferences.getString("avatar","")
+        txtZodiac.text = sharedPreferences.getString("Taurus","none")!!.toEditable()
+        var str = java.lang.StringBuilder()
+        str
+            .append(sharedPreferences.getString("vk","none"))
+            .append("\n")
+            .append(sharedPreferences.getString("instagram","none"))
+            .append("\n")
+            .append(sharedPreferences.getString("status","none"))
+            .append("\n")
+            .append(sharedPreferences.getString("last","none"))
+            .append("\n")
+            .append(sharedPreferences.getString("completed_task","none"))
+            .append("\n")
+        txtAbout.text = str.toString().toEditable()
+        Glide.with(this).load(sharedPreferences.getString("avatar",AVATARURLIMAGE)).into(imAvatar);
+
 
 
     }

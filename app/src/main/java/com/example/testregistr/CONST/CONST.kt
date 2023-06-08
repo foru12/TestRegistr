@@ -7,6 +7,7 @@ object CONST {
     const val MEURL = "api/v1/users/me/"
     const val REGISTRURL = "api/v1/users/register/"
     const val REFRESHTOKEN = "api/v1/users/refresh-token/"
+    const val AVATARURLIMAGE = "https://akolli.github.io/images/cat.jpg"
     var acessToken = ""
     var refreshToken = ""
     //https://plannerok.ru/api/v1/users/me/
