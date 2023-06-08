@@ -2,6 +2,7 @@ package com.example.testregistr.ViewModel.API
 
 import android.util.Log
 import com.example.testregistr.Model.DataMe
+import com.example.testregistr.Model.ProfileData
 import com.example.testregistr.ViewModel.CallBack.CallBackInterfaceRefresh
 import com.example.testregistr.ViewModel.CallBack.CallBackRequest
 import com.example.testregistr.ViewModel.Service.ServiceMe
@@ -16,7 +17,7 @@ class ClientAPIMe : CallBackInterfaceRefresh {
 
 
 
-    override fun executeRefresh(url: String?, callback: CallBackRequest?, token: String) {
+    override fun executeRefresh(url: String?, callback: CallBackRequest?, token: String,tokenMap: MutableMap<String,String>) {
         Log.e("Start Post request","...")
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(url)
@@ -32,6 +33,8 @@ class ClientAPIMe : CallBackInterfaceRefresh {
             override fun onResponse(call: Call<DataMe?>, response: Response<DataMe?>) {
 
 
+                Log.e("Response","Me" + "-->" + response.toString())
+                Log.e("Response","Me" + "-->" + response.code())
                 Log.e("Response","Me" + "-->" + response.body())
 
 

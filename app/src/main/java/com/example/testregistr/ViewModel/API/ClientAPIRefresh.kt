@@ -15,7 +15,7 @@ class ClientAPIRefresh : CallBackInterfaceRefresh {
 
 
 
-    override fun executeRefresh(url: String?, callback: CallBackRequest?, token: String) {
+    override fun executeRefresh(url: String?, callback: CallBackRequest?, token: String,tokenMap: MutableMap<String,String>) {
 
         Log.e("Start Post request","...")
         val retrofit: Retrofit = Retrofit.Builder()
@@ -29,10 +29,11 @@ class ClientAPIRefresh : CallBackInterfaceRefresh {
 
 
 
-        val call: Call<DataInfo?>? = retrofitAPI.loadRepoRefresh("Bearer " + token)
+        val call: Call<DataInfo?>? = retrofitAPI.loadRepoRefresh("Bearer " + token,tokenMap)
         Log.e("Добавляем токен","--> " + "Bearer : " + token)
         call?.enqueue(object : Callback<DataInfo?> {
             override fun onResponse(call: Call<DataInfo?>, response: Response<DataInfo?>) {
+
                 Log.e("Response","--> " + (response.body()?.access_token))
                 Log.e("Response","--> " + (response.body()?.is_user_exists))
                 Log.e("Response","--> " + (response.body()?.user_id))

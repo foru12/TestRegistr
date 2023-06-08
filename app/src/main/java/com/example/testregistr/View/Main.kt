@@ -93,7 +93,7 @@ class Main : AppCompatActivity(), CallBackRequest {
 
         btnOkSms.setOnClickListener {
             var code = edSmsConfirmation.text.toString()
-            if (code != "") {
+            if (code != "" && code == "133337") {
                 layout_signin_ID.visibility = View.GONE
                 layout_loading_ID.visibility = View.VISIBLE
                 params["code"] = code
@@ -239,7 +239,9 @@ class Main : AppCompatActivity(), CallBackRequest {
     }
 
     private fun startProfile(token: String) {
-        restClientApiMe.executeRefresh(BASEURL, this, token)
+        val params: MutableMap<String, String> = HashMap()
+        params["refresh_token"] = sharedPreferences.getString("access_token","").toString()
+        restClientApiMe.executeRefresh(BASEURL, this, token,params)
     }
 
     override fun successReqMe(response: DataMe?) {
@@ -250,8 +252,9 @@ class Main : AppCompatActivity(), CallBackRequest {
         if (response == null) {
             Log.e("Опа!", "Токен пора бы и обновить вообще-то")
 
-
-            restClientApiRefresh.executeRefresh(BASEURL, this, refreshToken)
+            val params: MutableMap<String, String> = HashMap()
+            params["refresh_token"] = sharedPreferences.getString("access_token","").toString()
+            restClientApiRefresh.executeRefresh(BASEURL, this, refreshToken,params)
 
 
         } else {

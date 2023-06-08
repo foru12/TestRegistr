@@ -18,6 +18,7 @@ import com.example.testregistr.ViewModel.API.ClientAPIMeUpdate
 import com.example.testregistr.ViewModel.API.ClientAPIRefresh
 import com.example.testregistr.ViewModel.CallBack.CallBackRequest
 import org.json.JSONObject
+import java.util.HashMap
 
 class Profile : AppCompatActivity(), CallBackRequest {
 
@@ -79,11 +80,10 @@ class Profile : AppCompatActivity(), CallBackRequest {
     }
 
     private fun changeDataMe() {
+        Log.e("Сохраняю новые данные профиля","...")
         editor.putString("birthday", txtDate.text.toString())
         editor.putString("city", txtCity.text.toString())
-        //about me
         editor.putString("abaoutMe", txtAbout.text.toString())
-
         editor.apply()
 
 
@@ -106,9 +106,12 @@ class Profile : AppCompatActivity(), CallBackRequest {
     }
 
     private fun getToken(){
-        var access_token = sharedPreferences.getString("access_token","")
-        Log.e("Profile","Ваш рефреш токен --->" + access_token)
-        restClientApiRefresh.executeRefresh(BASEURL,this, access_token.toString())
+        Log.e("Запрос на рефреш токен","...")
+        var refresh_token = sharedPreferences.getString("refresh_token","")
+        Log.e("Profile","Ваш рефреш токен --->" + refresh_token)
+        val params: MutableMap<String, String> = HashMap()
+        params["refresh_token"] = "{$refresh_token}"
+        restClientApiRefresh.executeRefresh(BASEURL,this, refresh_token.toString(),params)
 
 
 
@@ -181,8 +184,8 @@ class Profile : AppCompatActivity(), CallBackRequest {
 
     override fun successReqCode(response: DataInfo?) {
 
-
         Log.e("Profile","Обновили токен")
+        Log.e("Profile","Отпраялю новые данные на сервер")
 
         accesToken = response?.access_token.toString()
         restClientAPIMeUpdate.executeUpdate(BASEURL,this,accesToken, jsonObject)
