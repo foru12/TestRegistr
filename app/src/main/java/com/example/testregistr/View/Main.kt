@@ -71,7 +71,8 @@ class Main : AppCompatActivity(), CallBackRequest {
 
         btnSignIn.setOnClickListener {
             //Добавить проверку на кол во симовлов в номере
-            var number = codePicker.fullNumber + edNubmer.text.toString()
+            var number = codePicker.fullNumber
+            Log.e("Number","--> " + codePicker.fullNumber)
             if (edNubmer.text.toString() != "") {
                 layout_signin_ID.visibility = View.GONE
                 layout_loading_ID.visibility = View.VISIBLE
